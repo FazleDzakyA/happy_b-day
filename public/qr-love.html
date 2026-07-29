@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scan QR - Luthfia Deanis 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(ellipse at top, #2B1432 0%, #0F0B15 50%, #0A0710 100%);
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+    }
+
+    /* Stars */
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle var(--d, 3s) infinite ease-in-out;
+      opacity: var(--o, 0.5);
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: var(--o, 0.5); transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.5); }
+    }
+
+    /* Aurora */
+    .aurora {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(249,217,118,0.08) 0%, rgba(255,214,232,0.06) 40%, transparent 70%);
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: auroraMove 8s infinite ease-in-out;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes auroraMove {
+      0%, 100% { transform: translateX(-50%) scale(1); }
+      50% { transform: translateX(-40%) scale(1.2); }
+    }
+
+    /* Floating Petals */
+    .petal {
+      position: fixed;
+      font-size: 18px;
+      animation: petalFall linear infinite;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.7;
+    }
+    @keyframes petalFall {
+      0% { transform: translateY(-30px) rotate(0deg); opacity: 0.8; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Poster Card */
+    .poster {
+      position: relative;
+      z-index: 10;
+      width: 340px;
+      background: rgba(25, 12, 38, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(249, 217, 118, 0.35);
+      border-radius: 32px;
+      padding: 36px 28px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 60px rgba(249,217,118,0.08), inset 0 0 60px rgba(255,214,232,0.03);
+    }
+
+    /* Decorative inner border */
+    .poster::before {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 1px dashed rgba(249,217,118,0.2);
+      border-radius: 26px;
+      pointer-events: none;
+    }
+
+    /* Top ornament */
+    .ornament {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .ornament-line {
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, #F9D976);
+    }
+    .ornament-line.right {
+      background: linear-gradient(to left, transparent, #F9D976);
+    }
+    .ornament-heart {
+      font-size: 14px;
+      animation: heartbeat 2s infinite ease-in-out;
+    }
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+    }
+
+    .badge {
+      font-family: 'Poppins', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #F9D976;
+      opacity: 0.8;
+      margin-bottom: 14px;
+    }
+
+    .name {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #F9D976, #FFE8EF, #F9D976);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 12px;
+      color: rgba(255, 214, 232, 0.75);
+      margin-bottom: 24px;
+    }
+
+    /* QR Code Frame */
+    .qr-frame {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      margin-bottom: 24px;
+    }
+    /* Corner decorations */
+    .qr-frame::before,
+    .qr-frame::after {
+      content: '';
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border-color: #F9D976;
+      border-style: solid;
+      z-index: 2;
+    }
+    .qr-frame::before {
+      top: -4px; left: -4px;
+      border-width: 3px 0 0 3px;
+      border-radius: 4px 0 0 0;
+    }
+    .qr-frame::after {
+      bottom: -4px; right: -4px;
+      border-width: 0 3px 3px 0;
+      border-radius: 0 0 4px 0;
+    }
+    .qr-corner-tr, .qr-corner-bl {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border-color: #F9D976;
+      border-style: solid;
+      z-index: 2;
+    }
+    .qr-corner-tr {
+      top: -4px; right: -4px;
+      border-width: 3px 3px 0 0;
+      border-radius: 0 4px 0 0;
+    }
+    .qr-corner-bl {
+      bottom: -4px; left: -4px;
+      border-width: 0 0 3px 3px;
+      border-radius: 0 0 0 4px;
+    }
+
+    .qr-bg {
+      width: 100%;
+      height: 100%;
+      background: #FFF8F8;
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      box-shadow: 0 8px 32px rgba(249,217,118,0.15), 0 2px 8px rgba(0,0,0,0.4);
+      border: 1px solid rgba(249,217,118,0.3);
+    }
+
+    .qr-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    /* Glow ring pulse */
+    .qr-glow {
+      position: absolute;
+      inset: -8px;
+      border-radius: 22px;
+      border: 1px solid rgba(249,217,118,0.3);
+      animation: glowPulse 3s infinite ease-in-out;
+      pointer-events: none;
+    }
+    @keyframes glowPulse {
+      0%, 100% { box-shadow: 0 0 10px rgba(249,217,118,0.2); opacity: 0.6; }
+      50% { box-shadow: 0 0 25px rgba(249,217,118,0.5); opacity: 1; }
+    }
+
+    /* Divider */
+    .divider {
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, #F9D976, transparent);
+      margin-bottom: 16px;
+    }
+
+    .scan-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 13px;
+      color: rgba(255, 214, 232, 0.9);
+      margin-bottom: 6px;
+      line-height: 1.6;
+    }
+
+    .url-text {
+      font-family: 'Poppins', sans-serif;
+      font-size: 8.5px;
+      color: rgba(249, 217, 118, 0.55);
+      letter-spacing: 0.05em;
+      margin-bottom: 18px;
+    }
+
+    /* Hearts row */
+    .hearts-row {
+      display: flex;
+      gap: 6px;
+      font-size: 12px;
+    }
+    .hearts-row span {
+      animation: heartbeat 2s infinite ease-in-out;
+    }
+    .hearts-row span:nth-child(2) { animation-delay: 0.3s; }
+    .hearts-row span:nth-child(3) { animation-delay: 0.6s; }
+
+    /* From */
+    .from-text {
+      font-family: 'Poppins', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(249, 217, 118, 0.5);
+      margin-top: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Aurora background -->
+<div class="aurora"></div>
+
+<!-- Stars -->
+<div class="stars" id="stars"></div>
+
+<!-- Falling petals -->
+<div id="petals"></div>
+
+<!-- The beautiful Poster Card -->
+<div class="poster">
+  <!-- Top ornament -->
+  <div class="ornament">
+    <div class="ornament-line"></div>
+    <span class="ornament-heart">💛</span>
+    <div class="ornament-line right"></div>
+  </div>
+
+  <p class="badge">✨ Birthday Surprise • 10 Oktober 2026 ✨</p>
+
+  <h1 class="name">Luthfia Deanis</h1>
+  <p class="subtitle">Sebuah kejutan spesial menantimu di sana...</p>
+
+  <!-- QR Code -->
+  <div class="qr-frame">
+    <div class="qr-glow"></div>
+    <div class="qr-corner-tr"></div>
+    <div class="qr-corner-bl"></div>
+    <div class="qr-bg">
+      <img src="qr-love.png" alt="QR Code - Luthfia Deanis Birthday" />
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <p class="scan-text">
+    Scan QR ini untuk membuka<br/>
+    sebuah kisah cinta yang sudah<br/>
+    dirajut khusus untukmu 🌸
+  </p>
+
+  <p class="url-text">happy-b-day-piaaaa.vercel.app</p>
+
+  <div class="hearts-row">
+    <span>🌸</span>
+    <span>❤️</span>
+    <span>🌸</span>
+  </div>
+
+  <p class="from-text">With love — Haydar</p>
+</div>
+
+<script>
+  // Generate random stars
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 80; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.cssText = `
+      left: ${Math.random() * 100}%;
+      top: ${Math.random() * 100}%;
+      --d: ${2 + Math.random() * 4}s;
+      --o: ${0.2 + Math.random() * 0.7};
+      animation-delay: ${Math.random() * 4}s;
+    `;
+    starsEl.appendChild(star);
+  }
+
+  // Generate falling petals
+  const petalsEl = document.getElementById('petals');
+  const petalEmojis = ['🌸', '✨', '🌿', '💫', '🌺'];
+  for (let i = 0; i < 10; i++) {
+    const petal = document.createElement('div');
+    petal.className = 'petal';
+    petal.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+    petal.style.cssText = `
+      left: ${Math.random() * 100}%;
+      animation-duration: ${6 + Math.random() * 8}s;
+      animation-delay: ${Math.random() * 8}s;
+      font-size: ${12 + Math.random() * 14}px;
+    `;
+    petalsEl.appendChild(petal);
+  }
+</script>
+</body>
+</html>
