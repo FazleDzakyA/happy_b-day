@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-primary: #FFF8F8;
+    --bg-secondary: #FFE8EF;
+    --card-bg: rgba(255, 248, 248, 0.65);
+    --card-border: rgba(255, 214, 232, 0.4);
+    --gold-accent: #F9D976;
+    --rose-gold: #E5A9B4;
+    --soft-pink: #FFD6E8;
+    --text-primary: #3D2B33;
+    --text-secondary: #7A5C69;
+  }
+
+  .dark {
+    --bg-primary: #0F0B15;
+    --bg-secondary: #1D1528;
+    --card-bg: rgba(25, 18, 36, 0.65);
+    --card-border: rgba(255, 214, 232, 0.15);
+    --gold-accent: #F9D976;
+    --rose-gold: #F5C6D0;
+    --soft-pink: #E8A8C8;
+    --text-primary: #FFF0F5;
+    --text-secondary: #D4B9C8;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+
+  h1, h2, h3, h4, .font-serif {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 12px 36px 0 rgba(255, 182, 193, 0.12);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 32px 0 rgba(212, 175, 55, 0.08);
+}
+
+.dark .glass-card {
+  background: rgba(30, 20, 42, 0.5);
+  border: 1px solid rgba(255, 214, 232, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Gold Gradient Text */
+.gold-text {
+  background: linear-gradient(135deg, #F9D976 0%, #E5A9B4 50%, #F9D976 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.rose-gold-gradient {
+  background: linear-gradient(135deg, #FFE8EF 0%, #FFD6E8 50%, #F5E6DA 100%);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(249, 217, 118, 0.4);
+  border-radius: 999px;
+}
+
+/* Subtle Shimmer & Pulse Animations */
+@keyframes goldPulse {
+  0%, 100% { filter: drop-shadow(0 0 10px rgba(249, 217, 118, 0.4)); }
+  50% { filter: drop-shadow(0 0 25px rgba(249, 217, 118, 0.8)); }
+}
+
+.animate-gold-pulse {
+  animation: goldPulse 4s infinite ease-in-out;
+}
+
+@keyframes floatSoft {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(1.5deg); }
+}
+
+.animate-float {
+  animation: floatSoft 5s infinite ease-in-out;
+}

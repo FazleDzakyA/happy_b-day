@@ -1,0 +1,16 @@
+{
+  "name": "Luthfia Deanis Storybook",
+  "short_name": "Luthfia Deanis",
+  "description": "An interactive romantic digital storybook for Luthfia Deanis",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0710",
+  "theme_color": "#FFF8F8",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
